@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>chess</title>
+    <script src="jquery.js"></script>
+    <style>
+        td{
+            height: 50px;width:50px;border: 1px solid #909090;
+            font-size: 25px;
+            text-align: center;
+        }
+        .white{
+            background: #fff;
+        }
+        .black{
+            background: #909090;
+        }
+
+    </style>
+</head>
+
+<script>
+
+    var pb={text:"&#9823;"};
+    var pw={text:"&#9817;"};
+    var tb={text:"&#9820;"};
+    var tw={text:"&#9814;"};
+    var hb={text:"&#9822;"};
+    var hw={text:"&#9816;"};
+    var eb={text:"&#9821;"};
+    var ew={text:"&#9815;"};
+    var fb={text:"&#9819;"};
+    var fw={text:"&#9812;"};
+    var kb={text:"&#9818;"};
+    var kw={text:"&#9813;"};
+
+
+
+    function createChessBoard() {
+        var size = 8;
+        var board = $('<table id="chess"></table');
+        var letters = [' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', ' '];
+        var headerAndFooter = $('<tr></tr>');
+        for (var i = 0; i < letters.length; i++) {
+            headerAndFooter.append('<td class="chess_header">' + letters[i] + '</td>');
+        }
+        for (var i = 0; i < size; i++) {
+            board.append('<tr></tr>');
+            for (var j = 0; j < size + 2; j++) {
+                $(board).find('tr:last').append('<td></td>');
+            }
+        }
+        board.append(headerAndFooter);
+        board.prepend(headerAndFooter.clone());
+
+        var numbers = [0, 8, 7, 6, 5, 4, 3, 2, 1];
+        $(board).find('tr').each(function(rowNum) {
+            if (rowNum !== 0 && rowNum !== 9) {
+                $(this).children('td').each(function(colNum) {
+                    if (colNum === 0 || colNum === 9) {
+                        $(this).text(numbers[rowNum]).addClass('chess_header');
+                    } else {
+                        if ((rowNum % 2 === 0 && colNum % 2 === 0) || (rowNum % 2 !== 0 && colNum % 2 !== 0)) {
+                            $(this).addClass('white');
+                        } else {
+                            $(this).addClass('black');
+                        }
+                        $(this).addClass(""+letters[colNum]+(9-rowNum));
+                    }
+                });
+            }
+        });
+        return board;
+    }
+    function goBoard(id,text) {
+           $("."+id).html(text);
+    }
+    function firstStage() {
+        goBoard("a2", pw.text);
+        goBoard("b2", pw.text);
+        goBoard("c2", pw.text);
+        goBoard("d2", pw.text);
+        goBoard("e2", pw.text);
+        goBoard("f2", pw.text);
+        goBoard("g2", pw.text);
+        goBoard("h2", pw.text);
+
+        goBoard("a1", tw.text);
+        goBoard("b1", hw.text);
+        goBoard("c1", ew.text);
+        goBoard("d1", kw.text);
+        goBoard("e1", fw.text);
+        goBoard("f1", ew.text);
+        goBoard("g1", hw.text);
+        goBoard("h1", tw.text);
+
+        goBoard("a7", pb.text);
+        goBoard("b7", pb.text);
+        goBoard("c7", pb.text);
+        goBoard("d7", pb.text);
+        goBoard("e7", pb.text);
+        goBoard("f7", pb.text);
+        goBoard("g7", pb.text);
+        goBoard("h7", pb.text);
+
+        goBoard("a8", tb.text);
+        goBoard("b8", hb.text);
+        goBoard("c8", eb.text);
+        goBoard("d8", fb.text);
+        goBoard("e8", kb.text);
+        goBoard("f8", eb.text);
+        goBoard("g8", hb.text);
+        goBoard("h8", tb.text);
+    }
+</script>
+
+
+<body>
+
+    <script>
+        var chessboard = createChessBoard();
+        $('body').append(chessboard);
+        firstStage();
+    </script>
+
+
+
+</body>
+</html>
